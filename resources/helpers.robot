@@ -21,33 +21,34 @@ ${REMOVED_ITEM}         xpath=//android.view.View[@content-desc="Code Smell"]
 Go to Product Page
     ${login}        Get Fixture  login
 
-    Click Element       ${USERNAME}
-    Sleep   2
-    Input Text          ${USERNAME}         ${login}[username]
+    Click Element                               ${USERNAME}
+    Sleep   2           
+    Input Text                                  ${USERNAME}         ${login}[username]
 
-    Click Element       ${PASSWORD}
+    Click Element                               ${PASSWORD}
     Sleep   2   
-    Input Text          ${PASSWORD}         ${login}[password]
+    Input Text                                  ${PASSWORD}         ${login}[password]
 
-    Click Element       ${SUBMIT}
-    Wait Until Element Is Visible   ${CONFIRM}   
-    Element Should Be Visible       ${CONFIRM}  
+    Click Element                               ${SUBMIT}
+    Wait Until Element Is Visible               ${CONFIRM}   
+    Element Should Be Visible                   ${CONFIRM}  
+    
 
 Add Product
     Sleep   2
-    ${element}=     Set Variable    ${ADD_PRODUCT}
+    ${element}=          Set Variable           ${ADD_PRODUCT}
 
-    Click Element                       ${element}  
-    Wait Until Element Is Visible       ${CHECK_ADDED_VISIBLE}
-    Element Attribute Should Match      ${element}      checked     false
+    Click Element                               ${element}  
+    Wait Until Element Is Visible               ${CHECK_ADDED_VISIBLE}
+    Element Attribute Should Match              ${element}      checked     false
 
-    Click Element                   ${CLICK_CART}
+    Click Element                               ${CLICK_CART}
     Sleep   2
-    Element Should Be Visible       ${CONFIRM_PRODUCT}
-    Element Should Be Visible       ${CONFIRM_BUY_PRODUCT}
+    Element Should Be Visible                   ${CONFIRM_PRODUCT}
+    Element Should Be Visible                   ${CONFIRM_BUY_PRODUCT}
 
 Remove Product
-    Click Element       ${REMOVE_ITEM}
+    Click Element                               ${REMOVE_ITEM}
     Wait Until Page Does Not Contain Element    ${REMOVED_ITEM}
     
 
