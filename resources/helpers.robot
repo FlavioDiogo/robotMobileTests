@@ -19,7 +19,7 @@ ${REMOVED_ITEM}         xpath=//android.view.View[@content-desc="Code Smell"]
 
 *** Keywords ***
 Go to Product Page
-    ${login}        Get Fixture  login
+    ${login}        Get Fixture         login
 
     Click Element                               ${USERNAME}
     Sleep   2           
@@ -32,15 +32,17 @@ Go to Product Page
     Click Element                               ${SUBMIT}
     Wait Until Element Is Visible               ${CONFIRM}   
     Element Should Be Visible                   ${CONFIRM}  
-    
+
 
 Add Product
     Sleep   2
-    ${element}=          Set Variable           ${ADD_PRODUCT}
+    ${element}=          Set Variable          ${ADD_PRODUCT}
+    ${elementadded}=     Set Variable          ${CHECK_ADDED_VISIBLE}
+
 
     Click Element                               ${element}  
     Wait Until Element Is Visible               ${CHECK_ADDED_VISIBLE}
-    Element Attribute Should Match              ${element}      checked     false
+    Element Attribute Should Match              ${elementadded}      enabled     false
 
     Click Element                               ${CLICK_CART}
     Sleep   2
