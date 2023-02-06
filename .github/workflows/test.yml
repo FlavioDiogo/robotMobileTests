@@ -32,13 +32,13 @@ jobs:
           # it is required that GitHub repository contains folder "reports". Commit some file inside "reports" to create it
           # place tests in folder tests or change docker run command accordingly
           # configure -e ROBOT_OPTIONS according to yout tests, or remove it if no special configuration is needed
-          run: |
-            docker run \
-              -v ${PWD}/reports:/robotMobileTests/logs:Z \
-              -v ${PWD}/tests:/robotMobileTests/tests:Z \
-              
-              --user $(id -u):$(id -g) \
-              ppodgorsek/robot-framework:latest
+          # run: |
+          #   docker run \
+          #     -v ${PWD}/reports:/robotMobileTests/logs:Z \
+          #     -v ${PWD}/tests:/robotMobileTests/tests:Z \
+          #     -e ROBOT_OPTIONS="--variable DINOSAUR:Achillobator --variable NOT_DINOSAUR:kissa" \
+          #     --user $(id -u):$(id -g) \
+          #     ppodgorsek/robot-framework:latest
         # upload test reports as a zip file
         - name: Upload reports
           uses: actions/upload-artifact@v3
@@ -47,5 +47,3 @@ jobs:
             name: reports
             # set path to Robot Framework results reports. Exclude dummy file that is needed because of ppodgorsek image priviledges.
             path: ${{ github.workspace }}/logs
-
-            #-e ROBOT_OPTIONS="--variable DINOSAUR:Achillobator --variable NOT_DINOSAUR:kissa" \
