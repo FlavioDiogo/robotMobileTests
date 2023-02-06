@@ -34,8 +34,8 @@ jobs:
           # configure -e ROBOT_OPTIONS according to yout tests, or remove it if no special configuration is needed
           run: |
             docker run \
-              -v ${PWD}/reports:/apkfluttertests/twp/logs:Z \
-              -v ${PWD}/tests:/apkfluttertests/twp:Z \
+              -v ${PWD}/reports:/robotMobileTests/logs:Z \
+              -v ${PWD}/tests:/robotMobileTests/tests:Z \
               -e ROBOT_OPTIONS="--variable DINOSAUR:Achillobator --variable NOT_DINOSAUR:kissa" \
               --user $(id -u):$(id -g) \
               ppodgorsek/robot-framework:latest
@@ -46,4 +46,4 @@ jobs:
           with:
             name: reports
             # set path to Robot Framework results reports. Exclude dummy file that is needed because of ppodgorsek image priviledges.
-            path: ${{ github.workspace }}/reports
+            path: ${{ github.workspace }}/logs
