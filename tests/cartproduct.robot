@@ -6,15 +6,10 @@ Test Setup      Open Session
 Test Teardown   Close Session
 
 *** Test Case ***
-Adicionar o produto Code Smell no carrinho
+Ordenar produto por Ordem Decrescente de valor
+    [TAGS]  orderProduct
+    Order product by Price - Descending
+
+Adiconar o produto BackPack no carrinho
     [TAGS]  addProduct
-    Go to Product Page
     Add Product
-
-Remover o produto Code Smell do carrinho
-    [TAGS]  removeProduct
-    Go to Product Page
-    Add Product 
-    Remove Product   
-
-
