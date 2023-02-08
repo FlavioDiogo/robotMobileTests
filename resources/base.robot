@@ -10,7 +10,7 @@ Open Session
     ...                 automationName=UiAutomator2
     ...                 platformName=Android
     ...                 deviceName=Emulator
-    ...                 app=${EXECDIR}/app/app-release.apk
+    ...                 app=${EXECDIR}/app/saucelabs.apk
     
 
 Close Session

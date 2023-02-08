@@ -4,7 +4,7 @@ Test Setup          Open Session
 Test Teardown       Close Session
 
 *** Variables ***
-${TOOLBAR_TITLE}    id= io.qaninja.android.twp:id/toolbarTitle 
+${TOOLBAR_TITLE}        id=io.qaninja.android.twp:id/toolbarTitle 
 
 
 *** Test Case ***

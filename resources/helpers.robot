@@ -4,10 +4,16 @@ Documentation       Aqui teremos as kWs helpers
 Library     AppiumLibrary
 
 *** Variables ***
-${PASSWORD}             xpath=//android.widget.EditText[contains(@index, '2')] 
-${USERNAME}             xpath=//android.widget.EditText[contains(@index, '1')]
-${SUBMIT}               xpath=//android.widget.Button[@content-desc="ENTER"]
-${CLICK_CART}           xpath=//android.widget.Button[contains(@index, '1')]
+${SORT_BUTTON}          xpath=//android.view.ViewGroup[contains(@content-desc, 'sort button')]
+${SORT_PRICE_DESC}      xpath=//android.view.ViewGroup[contains(@content-desc, 'priceDesc')]
+${CHECK_ORDER_OK}       xpath=//android.view.ViewGroup[@content-desc="active option"]/android.widget.TextView
+
+${ADD_ITEM}             xpath=//android.widget.TextView[contains(@text, 'Sauce Labs Backpack')]
+${VISIBLE_ITEM}         xpath=//android.widget.ScrollView[@content-desc="product screen"]/android.view.ViewGroup/android.widget.ImageView
+${ADD_TO_CART}          xpath=//android.view.ViewGroup[@content-desc="Add To Cart button"]
+${CONFIRM_ITEM_CART}    xpath=//android.widget.TextView[@content-desc="product label"]    
+
+
 ${CONFIRM_PRODUCT}      xpath=//android.view.View[contains(@content-desc, 'Code Smell')]
 ${ADD_PRODUCT}          xpath=(//android.widget.Button[@content-desc="ADD"])[1]
 ${CHECK_ADDED_VISIBLE}  xpath=//android.widget.Button[@content-desc="ADDED"]
@@ -18,44 +24,25 @@ ${REMOVED_ITEM}         xpath=//android.view.View[@content-desc="Code Smell"]
 
 
 *** Keywords ***
-Go to Product Page
-    ${login}        Get Fixture         login
-
-    Click Element                               ${USERNAME}
-    Sleep   2           
-    Input Text                                  ${USERNAME}         ${login}[username]
-
-    Click Element                               ${PASSWORD}
-    Sleep   2   
-    Input Text                                  ${PASSWORD}         ${login}[password]
-
-    Click Element                               ${SUBMIT}
-    Wait Until Element Is Visible               ${CONFIRM}   
-    Element Should Be Visible                   ${CONFIRM}  
-
+Order product by Price - Descending
+   
+    Click Element                               ${SORT_BUTTON}
+    Wait Until Element Is Visible               ${SORT_PRICE_DESC}
+    Click Element                               ${SORT_PRICE_DESC}
+    Wait Until Element Is Visible               ${SORT_BUTTON}
+    Click Element                               ${SORT_BUTTON}
+    Wait Until Element Is Visible               ${CHECK_ORDER_OK}
+    Element Should Be Visible                   ${CHECK_ORDER_OK}
+    Click Element                               ${SORT_PRICE_DESC}  
 
 Add Product
-    Sleep   2
-    ${element}=          Set Variable          ${ADD_PRODUCT}
-    ${elementadded}=     Set Variable          ${CHECK_ADDED_VISIBLE}
-
-
-    Click Element                               ${element}  
-    Wait Until Element Is Visible               ${CHECK_ADDED_VISIBLE}
-    Element Attribute Should Match              ${elementadded}      enabled     false
-
-    Click Element                               ${CLICK_CART}
-    Sleep   2
-    Element Should Be Visible                   ${CONFIRM_PRODUCT}
-    Element Should Be Visible                   ${CONFIRM_BUY_PRODUCT}
-
-Remove Product
-    Click Element                               ${REMOVE_ITEM}
-    Wait Until Page Does Not Contain Element    ${REMOVED_ITEM}
-    
-
-    
-
+  
+    Click Element                               ${ADD_ITEM}
+    Wait Until Element Is Visible               ${VISIBLE_ITEM}    
+    Element Should Be Visible                   ${VISIBLE_ITEM}
+    Wait Until Element Is Visible               ${ADD_TO_CART}
+    Click Element                               ${ADD_TO_CART}
+    Element Text Should Be                      ${CONFIRM_ITEM_CART}        Sauce Labs Backpack
 
 
 
