@@ -10,9 +10,9 @@ ${CHECK_ORDER_OK}       xpath=//android.view.ViewGroup[@content-desc="active opt
 
 ${ADD_ITEM}             xpath=//android.widget.TextView[contains(@text, 'Sauce Labs Backpack')]
 ${VISIBLE_ITEM}         xpath=//android.widget.ScrollView[@content-desc="product screen"]/android.view.ViewGroup/android.widget.ImageView
-${ADD_TO_CART}          xpath=//android.view.ViewGroup[@content-desc="Add To Cart button"]
-${CONFIRM_ITEM_CART}    xpath=//android.widget.TextView[@content-desc="product label"]    
-
+${ADD_TO_CART}          xpath=//android.view.ViewGroup[@content-desc="Add To Cart button"]/android.widget.TextView
+${CLICK_BADGE}          xpath=//android.view.ViewGroup[@content-desc="cart badge"]/android.widget.ImageView
+${CONFIRM_ITEM_CART}    xpath=//android.widget.TextView[contains(@text, 'Sauce Labs Backpack')] 
 
 ${CONFIRM_PRODUCT}      xpath=//android.view.View[contains(@content-desc, 'Code Smell')]
 ${ADD_PRODUCT}          xpath=(//android.widget.Button[@content-desc="ADD"])[1]
@@ -40,9 +40,13 @@ Add Product
     Click Element                               ${ADD_ITEM}
     Wait Until Element Is Visible               ${VISIBLE_ITEM}    
     Element Should Be Visible                   ${VISIBLE_ITEM}
-    Wait Until Element Is Visible               ${ADD_TO_CART}
+
+    Swipe By Percent        67      52.1        69.4        28.9
+
     Click Element                               ${ADD_TO_CART}
-    Element Text Should Be                      ${CONFIRM_ITEM_CART}        Sauce Labs Backpack
+    Click Element                               ${CLICK_BADGE}
+    Wait Until Page Contains                    Sauce Labs Backpack
+    Element Should Be Visible                   ${CONFIRM_ITEM_CART}
 
 
 

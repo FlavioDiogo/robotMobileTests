@@ -10,6 +10,6 @@ Ordenar produto por Ordem Decrescente de valor
     [TAGS]  orderProduct
     Order product by Price - Descending
 
-Adiconar o produto BackPack no carrinho
+Adicionar o produto Backpack no carrinho
     [TAGS]  addProduct
     Add Product
