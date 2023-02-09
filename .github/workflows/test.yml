@@ -35,7 +35,7 @@ jobs:
           run: |
             docker run \
               -v ${PWD}/logs:/twp/logs:Z \
-              -v ${PWD}/tests:/twp/tests:Z \
+              robot -V /twp/tests cartproduct.robot
               --user $(id -u):$(id -g) \
               ppodgorsek/robot-framework:latest
         # upload test reports as a zip file
