@@ -1,3 +1,8 @@
+name: Run Robot Framework Tests
+on:
+  push:
+    branches:
+      - saucelabstest
 version: '2.1'
 services:
   appium:
