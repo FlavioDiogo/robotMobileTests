@@ -35,7 +35,7 @@ jobs:
           run: |
             docker run \
               -v ${PWD}/logs:/opt/robotframework/logs:Z \
-              -v ${PWD}/tests:/opt/robotframework/tests:Z \
+              -v ${PWD}/tests:/twp/tests:Z \
               --user $(id -u):$(id -g) \
               ppodgorsek/robot-framework:latest
         # upload test reports as a zip file
