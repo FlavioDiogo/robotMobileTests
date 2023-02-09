@@ -34,15 +34,15 @@ jobs:
           # configure -e ROBOT_OPTIONS according to yout tests, or remove it if no special configuration is needed
           run: |
             docker run \
-              -v ${PWD}twp/logs:/opt/robotframework/reports:Z \
+              -v ${PWD}twp/logs:/opt/robotframework/logs:Z \
               -v ${PWD}twp/tests:/opt/robotframework/tests:Z \
               --user $(id -u):$(id -g) \
               ppodgorsek/robot-framework:latest
         # upload test reports as a zip file
-        - name: Upload reports
+        - name: Upload logs
           uses: actions/upload-artifact@v3
           if: always()
           with:
-            name: reports
+            name: logs
             # set path to Robot Framework results reports. Exclude dummy file that is needed because of ppodgorsek image priviledges.
             path: ${{ github.workspace }}/logs
