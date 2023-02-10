@@ -5,7 +5,7 @@ Resource        ../resources/helpers.robot
 Test Setup      Open Session
 Test Teardown   Close Session
 
-*** Test Case ***
+*** Test Cases ***
 Ordenar produto por Ordem Decrescente de valor
     [TAGS]  orderProduct
     Order product by Price - Descending
