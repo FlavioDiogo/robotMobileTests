@@ -1,6 +1,6 @@
 
 *** Settings ***
-Library     AppiumLibrary
+Library         AppiumLibrary
 #Library     JSONLibrary   
 
 *** Keywords ***
