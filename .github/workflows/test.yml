@@ -1,48 +1,41 @@
-# runs tests for push-events, for pull requests and using cron schedule:
-name: Run Robot Framework Tests
+name: CI
+
+# Controls when the workflow will run
 on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    # runs tests for commits pushed to master
-    branches:
-      - saucelabstest
-    # do not run tests if file README.md changes
-    paths-ignore:
-      - '**.md'
-    # run tests for GitHub Pull requests. Test result is visible in the Pull Request page.
+    branches: [ "saucelabstest" ]
   pull_request:
-    paths-ignore:
-      - '**.md'
-  schedule:
-    # run tests once a year in January 1st
-    - cron:  '0 0 1 1 *'
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-    run_tests:
-        runs-on: ubuntu-latest
-        steps:
-        # checkout code from a repository
-        - uses: actions/checkout@v3
-        # create folder for test reports
-        - name: Create folder for reports
-          run: mkdir reports
-        # run Robot Framework tests inside Docker container
-        - name: Run Robot Framework Tests
-          # container used here is ppodgorsek/robot-framework:latest
-          # it is strongly recommended to use versioned image (ie. not the tag latest like here) to maintain dependencies
-          # see container documentation for usage: https://hub.docker.com/r/ppodgorsek/robot-framework/dockerfile
-          # it is required that GitHub repository contains folder "reports". Commit some file inside "reports" to create it
-          # place tests in folder tests or change docker run command accordingly
-          # configure -e ROBOT_OPTIONS according to yout tests, or remove it if no special configuration is needed
-          run: |
-            docker run \
-              -v ${PWD}/logs:/opt/robotframework/logs:Z \
-              -v ${PWD}/tests:/opt/robotframework/tests:Z \
-              --user $(id -u):$(id -g) \
-              ppodgorsek/robot-framework:latest
-        # upload test reports as a zip file
-        - name: Upload logs
-          uses: actions/upload-artifact@v3
-          if: always()
-          with:
-            name: logs
-            # set path to Robot Framework results reports. Exclude dummy file that is needed because of ppodgorsek image priviledges.
-            path: ${{ github.workspace }}/logs
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+
+      #python and robotframework setup
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.9
+          cache: 'pip'
+          
+      - name: Install python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Run tests
+        run: |
+                 robot  TESTS
+
