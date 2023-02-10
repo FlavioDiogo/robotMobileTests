@@ -1,7 +1,7 @@
 
 *** Settings ***
 Library     AppiumLibrary
-#Library     JSONLibrary   
+Library     JSONLibrary   
 
 *** Keywords ***
 Open Session
