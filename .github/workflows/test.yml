@@ -2,9 +2,9 @@ name: Appium Android
 
 on:
   push:
-    branches: [ main ]
+    branches: [ saucelabstest  ]
   pull_request:
-    branches: [ main ]
+    branches: [ saucelabstest  ]
 
 jobs:
   build:
@@ -34,4 +34,3 @@ jobs:
         arch: x86_64
         profile: Nexus 6
         script: mvn clean test -Pandroid
-        
