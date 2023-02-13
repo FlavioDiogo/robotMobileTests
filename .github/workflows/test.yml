@@ -1,34 +1,43 @@
-name: Appium Android
+name: Reply to issue
 
 on:
-  push:
-    branches: [ saucelabstest ]
-  pull_request:
-    branches: [ saucelabstest ]
-
- test:
+    issues:
+        types: [opened]
+      
+jobs:
+    find_recipe:
         runs-on: ubuntu-latest
         steps:
         - uses: actions/checkout@v2
-        - name: Execute tests
-          uses: joonvena/robotframework-docker-action@v1.0
-        - name: Upload test results
+        - name: Find recipe from foodie.fi
+          run: |
+            docker run \
+              -v ${PWD}/reports:/opt/robotframework/reports:Z \
+              -v ${PWD}/tasks:/opt/robotframework/tests:Z \
+              -v ${PWD}/reports/file://opt/robotframework/temp/reports/file/ \
+              -e ROBOT_OPTIONS="--variable RECIPE_TO_SEARCH:${{ github.event.issue.title }}" \
+              --user $(id -u):$(id -g) \
+              ppodgorsek/robot-framework:latest
+        - name: Set results as variable
+          id: recipes
+          run: |
+            file="reports/file/recipe_numbers.log"
+            result=$(cat $file)
+            echo "::set-env name=RECIPES::$result"
+        - name: print results
+          run: |
+            echo "Number of recipes" 
+            cat reports/file/recipe_numbers.log
+        - name: Autoclose issue
+          uses: arkon/issue-closer-action@v1.1
+          with:
+            repo-token: ${{ secrets.GITHUB_TOKEN }}
+            type: "title"
+            regex: ".*"
+            message: "@${issue.user.login} - ${{ env.RECIPES }}"
+        - name: Upload run results
           uses: actions/upload-artifact@v1
           if: always()
           with:
             name: reports
-            path: reports
-    
-    generate_report:
-        if: always()
-        needs: [test] 
-        runs-on: ubuntu-latest
-        steps:
-        - uses: actions/checkout@v2
-        - name: Download reports
-          uses: actions/download-artifact@v1
-          with:
-            name: reports
-        - name: Send report to commit
-          uses: joonvena/robotframework-reporter-action@v2.1
-          with:
+            path: ${{ github.workspace }}/reports
